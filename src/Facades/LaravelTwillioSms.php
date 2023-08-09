@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  */
 class LaravelTwillioSms extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return \creativeCrafts\LaravelTwillioSms\LaravelTwillioSms::class;
     }
