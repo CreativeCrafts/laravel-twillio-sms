@@ -2,9 +2,9 @@
 
 namespace creativeCrafts\LaravelTwillioSms\Tests;
 
+use creativeCrafts\LaravelTwillioSms\LaravelTwillioSmsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use creativeCrafts\LaravelTwillioSms\LaravelTwillioSmsServiceProvider;
 
 class TestCase extends Orchestra
 {
