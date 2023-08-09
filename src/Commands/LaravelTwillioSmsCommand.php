@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace creativeCrafts\LaravelTwillioSms\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelTwillioSmsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-twillio-sms';
 
     public $description = 'My command';
 
