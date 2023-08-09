@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/creativecrafts/laravel-twillio-sms/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/creativecrafts/laravel-twillio-sms/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/creativecrafts/laravel-twillio-sms.svg?style=flat-square)](https://packagist.org/packages/creativecrafts/laravel-twillio-sms)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This is a simple package to send sms messages using twillio sms service.
 
 ## Installation
 
@@ -15,17 +15,10 @@ You can install the package via composer:
 composer require creativecrafts/laravel-twillio-sms
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-twillio-sms-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-twillio-sms-config"
+php artisan vendor:publish --tag="twillio-sms-config"
 ```
 
 This is the contents of the published config file:
@@ -33,12 +26,6 @@ This is the contents of the published config file:
 ```php
 return [
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-twillio-sms-views"
 ```
 
 ## Usage
