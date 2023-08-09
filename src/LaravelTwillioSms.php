@@ -32,7 +32,7 @@ class LaravelTwillioSms
     {
         return $this->client->messages->create($number, [
             'from' => config('twillio-sms.from'),
-            'body' => $message
+            'body' => $message,
         ]);
     }
 }
