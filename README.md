@@ -34,8 +34,7 @@ return [
 ## Usage
 
 ```php
-$laravelTwillioSms = new \creativeCrafts\LaravelTwillioSms\LaravelTwillioSms();
-$laravelTwillioSms->sendSms('+2348123456789', 'Your message here');
+$laravelTwillioSms = \creativeCrafts\LaravelTwillioSms\Facades\LaravelTwillioSms::sendSms('+1234566798', 'Hello World from Laravel Twillio SMS');
 ```
 
 ## Testing
