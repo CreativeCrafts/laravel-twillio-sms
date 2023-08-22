@@ -20,6 +20,7 @@ class LaravelTwillioSms
         $auth_token = config('twillio-sms.auth_token');
 
         $client = new Client($account_sid, $auth_token);
+
         return $client->messages->create($number, [
             'from' => config('twillio-sms.sms_from'),
             'body' => $message,
