@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-twillio-sms` will be documented in this file.
 
+## 0.0.3 - 2023-08-22
+
+- Updated the LaravelTwillioSms class and make it static
+
 ## 0.0.2 - 2023-08-22
 
 - Updated README.md
