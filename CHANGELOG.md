@@ -25,3 +25,7 @@ All notable changes to `laravel-twillio-sms` will be documented in this file.
 ## 0.0.4 - 2023-08-22
 
 - Fixed a bug in the LaravelTwillioSms class that was not including the sender's phone number
+
+## 0.0.5 - 2023-08-22
+
+- Updated composer packages
