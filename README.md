@@ -25,14 +25,17 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'account_sid' => env('TWILIO_ACCOUNT_SID'),
+    'auth_token' => env('TWILIO_AUTH_TOKEN'),
+    'sms_from' => env('TWILIO_SMS_FROM'),
 ];
 ```
 
 ## Usage
 
 ```php
-$laravelTwillioSms = new creativeCrafts\LaravelTwillioSms();
-echo $laravelTwillioSms->echoPhrase('Hello, creativeCrafts!');
+$laravelTwillioSms = new \creativeCrafts\LaravelTwillioSms\LaravelTwillioSms();
+$laravelTwillioSms->sendSms('+2348123456789', 'Your message here');
 ```
 
 ## Testing

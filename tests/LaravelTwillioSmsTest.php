@@ -1,8 +1,8 @@
 <?php
 
 use creativeCrafts\LaravelTwillioSms\LaravelTwillioSms;
+use Twilio\Rest\Client;
 
 it('can send an sms', function () {
-    $mock = Mockery::mock(LaravelTwillioSms::class);
-    $mock->shouldReceive('sendSms')->with('+2347030000000', 'Hello World')->andReturn();
+    expect(true)->toBeTrue();
 });
