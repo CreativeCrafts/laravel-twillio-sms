@@ -29,3 +29,7 @@ All notable changes to `laravel-twillio-sms` will be documented in this file.
 ## 0.0.5 - 2023-08-22
 
 - Updated composer packages
+
+## 0.0.6 - 2023-08-24
+
+- Added a contract to the LaravelTwillioSms class and updated test
