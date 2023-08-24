@@ -2,16 +2,16 @@
 
 namespace creativeCrafts\LaravelTwillioSms;
 
+use creativeCrafts\LaravelTwillioSms\Contracts\LaravelTwillioSmsContract;
 use Twilio\Exceptions\TwilioException;
-use Twilio\Rest\Api\V2010\Account\MessageInstance;
 use Twilio\Rest\Client;
 
-class LaravelTwillioSms
+class LaravelTwillioSms implements LaravelTwillioSmsContract
 {
     /**
      * @throws TwilioException
      */
-    public static function sendSms(string $number, string $message): MessageInstance
+    public function sendSms(string $number, string $message): bool
     {
         /** @var string $account_sid */
         $account_sid = config('twillio-sms.account_sid');
@@ -21,9 +21,11 @@ class LaravelTwillioSms
 
         $client = new Client($account_sid, $auth_token);
 
-        return $client->messages->create($number, [
+        $client->messages->create($number, [
             'from' => config('twillio-sms.sms_from'),
             'body' => $message,
         ]);
+
+        return true;
     }
 }

@@ -34,7 +34,17 @@ return [
 ## Usage
 
 ```php
+ // You can use the facade like this
 $laravelTwillioSms = \creativeCrafts\LaravelTwillioSms\Facades\LaravelTwillioSms::sendSms('+1234566798', 'Hello World from Laravel Twillio SMS');
+
+// or it can be used like this
+
+$laravelTwillioSms = (new \creativeCrafts\LaravelTwillioSms\LaravelTwillioSms())('+1234566798', 'Hello World from Laravel Twillio SMS');
+
+// or it can be used like this
+
+$laravelTwillioSmsClient = new \creativeCrafts\LaravelTwillioSms\LaravelTwillioSms();
+$laravelTwillioSms = $laravelTwillioSmsClient->sendSms('+1234566798', 'Hello World from Laravel Twillio SMS');
 ```
 
 ## Testing
