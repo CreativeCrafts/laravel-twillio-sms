@@ -33,3 +33,8 @@ All notable changes to `laravel-twillio-sms` will be documented in this file.
 ## 0.0.6 - 2023-08-24
 
 - Added a contract to the LaravelTwillioSms class and updated test
+
+## 0.0.7 - 2024-03-13
+
+- Added support for laravel 11
+- Remove support for php 8.1
