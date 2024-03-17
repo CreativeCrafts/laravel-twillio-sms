@@ -38,3 +38,7 @@ All notable changes to `laravel-twillio-sms` will be documented in this file.
 
 - Added support for laravel 11
 - Remove support for php 8.1
+
+## 1.0.0 - 2024-03-17
+
+- Bump version to 1.0.0
