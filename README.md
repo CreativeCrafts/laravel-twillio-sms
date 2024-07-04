@@ -1,5 +1,6 @@
 # A simple package to send sms messages using twillio
 
+[![GitHub Streak](https://streak-stats.demolab.com/?user=rockblings)](https://git.io/streak-stats)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/creativecrafts/laravel-twillio-sms.svg?style=flat-square)](https://packagist.org/packages/creativecrafts/laravel-twillio-sms)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/creativecrafts/laravel-twillio-sms/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/creativecrafts/laravel-twillio-sms/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/creativecrafts/laravel-twillio-sms/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/creativecrafts/laravel-twillio-sms/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
