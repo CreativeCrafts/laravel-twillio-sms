@@ -152,6 +152,21 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
         return true;
     }
 
+    public function getPhoneNumber(): string
+    {
+        return $this->number;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function getSentFrom(): string
+    {
+        return $this->from;
+    }
+
     /**
      * Initializes and returns a Twilio Client instance.
      *
@@ -193,20 +208,5 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
         if ($this->validationChecks !== []) {
             (new ValidationChecks($phoneNumberLookUp))();
         }
-    }
-
-    public function getPhoneNumber(): string
-    {
-        return $this->number;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
-
-    public function getSentFrom(): string
-    {
-        return $this->from;
     }
 }
