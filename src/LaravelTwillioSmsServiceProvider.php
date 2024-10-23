@@ -1,6 +1,8 @@
 <?php
 
-namespace creativeCrafts\LaravelTwillioSms;
+declare(strict_types=1);
+
+namespace CreativeCrafts\LaravelTwillioSms;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

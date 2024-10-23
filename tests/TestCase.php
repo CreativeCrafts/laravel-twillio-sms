@@ -1,8 +1,10 @@
 <?php
 
-namespace creativeCrafts\LaravelTwillioSms\Tests;
+declare(strict_types=1);
 
-use creativeCrafts\LaravelTwillioSms\LaravelTwillioSmsServiceProvider;
+namespace CreativeCrafts\LaravelTwillioSms\Tests;
+
+use CreativeCrafts\LaravelTwillioSms\LaravelTwillioSmsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -13,15 +15,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'creativeCrafts\\LaravelTwillioSms\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'CreativeCrafts\\LaravelTwillioSms\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            LaravelTwillioSmsServiceProvider::class,
-        ];
     }
 
     public function getEnvironmentSetUp($app)
@@ -32,5 +27,12 @@ class TestCase extends Orchestra
         $migration = include __DIR__.'/../database/migrations/create_laravel-twillio-sms_table.php.stub';
         $migration->up();
         */
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            LaravelTwillioSmsServiceProvider::class,
+        ];
     }
 }
