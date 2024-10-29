@@ -6,7 +6,7 @@ use CreativeCrafts\LaravelTwillioSms\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
 
-// pest()->project()->github('CreativeCrafts/laravel-twillio-sms');
+pest()->project()->github('CreativeCrafts/laravel-twillio-sms');
 
 
 /**
