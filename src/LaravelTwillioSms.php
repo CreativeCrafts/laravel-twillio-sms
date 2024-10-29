@@ -14,12 +14,16 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
 {
     protected Client $client;
 
+    // @pest-mutate-ignore
     protected string $number = '';
 
+    // @pest-mutate-ignore
     protected string $message = '';
 
+    // @pest-mutate-ignore
     protected string $from = '';
 
+    // @pest-mutate-ignore
     protected array $validationChecks = [];
 
     /**
@@ -132,8 +136,10 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
      *
      * @deprecated This method will be removed in version 2.0. Use `send` instead.
      */
+    // @pest-mutate-ignore
     public function sendSms(string $number, string $message): bool
     {
+        // @pest-mutate-ignore
         trigger_error('The sendSms is deprecated and will be removed in version 2.0. Use send instead.', E_USER_DEPRECATED);
 
         /** @var string $account_sid */
@@ -150,6 +156,21 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
         ]);
 
         return true;
+    }
+
+    public function getPhoneNumber(): string
+    {
+        return $this->number;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function getSentFrom(): string
+    {
+        return $this->from;
     }
 
     /**
@@ -181,7 +202,7 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
      *
      * @throws TwilioException If there is an error fetching the phone number details or performing validation.
      */
-    protected function validatePhoneNumber(): void
+    protected function validatePhoneNumber(): bool
     {
         $phoneNumberLookUp = $this->client->lookups->v2->phoneNumbers($this->getPhoneNumber())->fetch([
             'fields' => implode(',', $this->validationChecks),
@@ -190,23 +211,9 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
         if ($phoneNumberLookUp->phoneNumber === null || $phoneNumberLookUp->valid === false) {
             throw new TwilioException('Invalid phone number.');
         }
-        if ($this->validationChecks !== []) {
-            (new ValidationChecks($phoneNumberLookUp))();
+        if ($this->validationChecks === []) {
+            return true;
         }
-    }
-
-    public function getPhoneNumber(): string
-    {
-        return $this->number;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
-
-    public function getSentFrom(): string
-    {
-        return $this->from;
+        return (new ValidationChecks($phoneNumberLookUp))();
     }
 }

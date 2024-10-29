@@ -20,7 +20,7 @@ final readonly class ValidateLineTypeIntelligence implements ValidationChecksCon
      *
      * @throws TwilioException If the phone number is not a mobile number.
      */
-    public function __invoke(): void
+    public function __invoke(): bool
     {
         /** @var array $lineTypeIntelligence */
         $lineTypeIntelligence = $this->phoneNumberLookUp->lineTypeIntelligence;
@@ -28,5 +28,7 @@ final readonly class ValidateLineTypeIntelligence implements ValidationChecksCon
         if ($lineTypeIntelligence['type'] !== 'mobile' && $lineTypeIntelligence['type'] !== 'unknown') {
             throw new TwilioException('Phone number is not a mobile number.');
         }
+
+        return true;
     }
 }

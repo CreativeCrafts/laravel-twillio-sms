@@ -12,5 +12,5 @@ interface ValidationChecksContract
         PhoneNumberInstance $phoneNumberLookUp
     );
 
-    public function __invoke(): void;
+    public function __invoke(): bool;
 }

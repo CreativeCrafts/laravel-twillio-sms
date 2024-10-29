@@ -23,7 +23,7 @@ final readonly class ValidationChecks implements ValidationChecksContract
      *
      * @throws TwilioException If any validation check fails.
      */
-    public function __invoke(): void
+    public function __invoke(): bool
     {
         /** @var array $validationChecks */
         $validationChecks = config('twillio-sms.phone_number_lookup.fields');
@@ -37,5 +37,6 @@ final readonly class ValidationChecks implements ValidationChecksContract
                     break;
             }
         }
+        return true;
     }
 }

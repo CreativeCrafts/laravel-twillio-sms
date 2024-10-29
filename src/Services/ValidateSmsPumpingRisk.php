@@ -23,7 +23,7 @@ final readonly class ValidateSmsPumpingRisk implements ValidationChecksContract
      *
      * @throws TwilioException If the phone number has a high SMS pumping risk score, an error code, or is blocked.
      */
-    public function __invoke(): void
+    public function __invoke(): bool
     {
         /** @var int $maxAllowedSmsPumpingRiskScore */
         $maxAllowedSmsPumpingRiskScore = config('twillio-sms.phone_number_lookup.sms_pumping_risk.max_allowed_sms_pumping_risk_score');
@@ -42,5 +42,6 @@ final readonly class ValidateSmsPumpingRisk implements ValidationChecksContract
         if ($smsPumpingRisk['number_blocked']) {
             throw new TwilioException('Phone number is blocked.');
         }
+        return true;
     }
 }

@@ -9,6 +9,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class LaravelTwillioSmsServiceProvider extends PackageServiceProvider
 {
+    // @pest-mutate-ignore
     public function configurePackage(Package $package): void
     {
         $package

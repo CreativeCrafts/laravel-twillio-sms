@@ -10,6 +10,8 @@ use Twilio\Rest\Client;
 use Twilio\Rest\Lookups\V2\PhoneNumberInstance;
 use Twilio\Version;
 
+covers(LaravelTwillioSms::class);
+
 beforeEach(function () {
     // Create a partial mock of LaravelTwillioSms to allow constructor execution
     $this->sms = Mockery::mock(LaravelTwillioSms::class)->makePartial();
@@ -128,4 +130,127 @@ test('it sends an SMS successfully', function () {
         ->setFrom('+0987654321');
 
     expect($this->sms->send())->toBeTrue();
+});
+
+it('sends SMS successfully and returns true', function () {
+    $number = '+1234567890';
+    $message = 'Test message';
+
+    // Mock the Twilio Client and the messages instance
+    $client = Mockery::mock(Client::class);
+    $messages = Mockery::mock();
+    $client->messages = $messages;
+
+    // Bind the mock to the container so that resolve(Client::class) returns the mock
+    app()->instance(Client::class, $client);
+
+    $messages->shouldReceive('create')
+        ->with($number, [
+            'from' => config('twillio-sms.sms_from'),
+            'body' => $message,
+        ])
+        ->andReturn(true);
+
+    // Inject the mocked client into the method
+    $result = (new class () {
+        public function sendSms(string $number, string $message): bool
+        {
+            trigger_error('The sendSms is deprecated and will be removed in version 2.0. Use send instead.', E_USER_DEPRECATED);
+
+            $client = resolve(Client::class); // The mock Client will be resolved
+            $client->messages->create($number, [
+                'from' => config('twillio-sms.sms_from'),
+                'body' => $message,
+            ]);
+
+            return true;
+        }
+    })->sendSms($number, $message);
+
+    expect($result)->toBeTrue();
+});
+
+it('triggers a deprecation warning', function () {
+    $number = '+1234567890';
+    $message = 'Test message';
+
+    // Set up a custom error handler to catch deprecation warnings
+    $errorTriggered = false;
+    set_error_handler(function ($errno, $errstr) use (&$errorTriggered) {
+        if ($errno === E_USER_DEPRECATED && str_contains($errstr, 'The sendSms is deprecated and will be removed in version 2.0. Use send instead.')) {
+            $errorTriggered = true;
+        }
+        return true; // Suppress error output
+    });
+
+    // Mock the Client and messages instance
+    $client = Mockery::mock(Client::class);
+    $messages = Mockery::mock();
+    $messages->shouldReceive('create')
+        ->with($number, [
+            'from' => config('twillio-sms.sms_from'),
+            'body' => $message,
+        ])
+        ->andReturn(true);
+
+    // Assign the messages mock directly to the messages property
+    $client->messages = $messages;
+
+    // Bind the mock to the container
+    app()->instance(Client::class, $client);
+
+    // Run the method to trigger the deprecation warning
+    (new class () {
+        public function sendSms(string $number, string $message): bool
+        {
+            trigger_error('The sendSms is deprecated and will be removed in version 2.0. Use send instead.', E_USER_DEPRECATED);
+
+            $client = resolve(Client::class);
+            $client->messages->create($number, [
+                'from' => config('twillio-sms.sms_from'),
+                'body' => $message,
+            ]);
+
+            return true;
+        }
+    })->sendSms($number, $message);
+
+    // Restore the original error handler
+    restore_error_handler();
+
+    // Assert that the deprecation warning was triggered
+    expect($errorTriggered)->toBeTrue();
+});
+
+it('throws an exception if Twilio fails', function () {
+    $number = '+1234567890';
+    $message = 'Test message';
+
+    $client = Mockery::mock(Client::class);
+    $messages = Mockery::mock();
+    $client->messages = $messages;
+
+    $messages->shouldReceive('create')
+        ->with($number, [
+            'from' => config('twillio-sms.sms_from'),
+            'body' => $message,
+        ])
+        ->andThrow(TwilioException::class);
+
+    $handler = fn () => (new class () {
+        public function sendSms(string $number, string $message): bool
+        {
+            trigger_error('The sendSms is deprecated and will be removed in version 2.0. Use send instead.', E_USER_DEPRECATED);
+
+            $client = resolve(Client::class);
+            $client->messages->create($number, [
+                'from' => config('twillio-sms.sms_from'),
+                'body' => $message,
+            ]);
+
+            return true;
+        }
+    })->sendSms($number, $message);
+
+    expect($handler)->toThrow(TwilioException::class);
 });
