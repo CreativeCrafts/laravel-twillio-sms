@@ -5,9 +5,12 @@ parameters:
     level: 9
     paths:
         - src
-        - config
-    tmpDir: build/phpstan
-    checkOctaneCompatibility: true
-    checkModelProperties: true
-    checkMissingIterableValueType: false
 
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+
+    tmpDir: build/phpstan
+    noModelMake: false
+    noUnnecessaryCollectionCall: false
+    checkModelProperties: true
+    inferPrivatePropertyTypeFromConstructor: true

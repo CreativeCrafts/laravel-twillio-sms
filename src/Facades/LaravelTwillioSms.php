@@ -1,6 +1,8 @@
 <?php
 
-namespace creativeCrafts\LaravelTwillioSms\Facades;
+declare(strict_types=1);
+
+namespace CreativeCrafts\LaravelTwillioSms\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -11,6 +13,6 @@ class LaravelTwillioSms extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \creativeCrafts\LaravelTwillioSms\LaravelTwillioSms::class;
+        return \CreativeCrafts\LaravelTwillioSms\LaravelTwillioSms::class;
     }
 }

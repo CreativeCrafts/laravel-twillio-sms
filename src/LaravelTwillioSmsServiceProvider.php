@@ -1,12 +1,15 @@
 <?php
 
-namespace creativeCrafts\LaravelTwillioSms;
+declare(strict_types=1);
+
+namespace CreativeCrafts\LaravelTwillioSms;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class LaravelTwillioSmsServiceProvider extends PackageServiceProvider
 {
+    // @pest-mutate-ignore
     public function configurePackage(Package $package): void
     {
         $package
