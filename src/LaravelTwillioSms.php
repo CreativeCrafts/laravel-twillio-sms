@@ -23,7 +23,6 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
     // @pest-mutate-ignore
     protected string $from = '';
 
-    // @pest-mutate-ignore
     protected array $validationChecks = [];
 
     /**
