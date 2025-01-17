@@ -78,3 +78,7 @@ All notable changes to `laravel-twillio-sms` will be documented in this file.
        - Extensive changes and additions in tests including introducing `pest` test setups and mocked Twilio calls.
 
     Overall, these changes introduce new workflows, dependencies, namespace adjustments, and additional testing structures significantly enhancing the package's capabilities and maintainability.
+
+## 1.2.0 - 2025-01-17
+
+- Temporary fix for Twilio SMS pumping risk issue

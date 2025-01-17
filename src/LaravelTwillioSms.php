@@ -118,10 +118,11 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
     public function send(): bool
     {
         try {
-            $this->validatePhoneNumber();
+            // $this->validatePhoneNumber();
             $this->client->messages->create($this->getPhoneNumber(), [
                 'from' => $this->getSentFrom(),
                 'body' => $this->getMessage(),
+                'RiskCheck' => 'disable'
             ]);
 
             return true;
