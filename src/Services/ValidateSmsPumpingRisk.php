@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CreativeCrafts\LaravelTwillioSms\Services;
 
 use CreativeCrafts\LaravelTwillioSms\Contracts\ValidationChecksContract;
+use Illuminate\Support\Facades\Config;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Lookups\V2\PhoneNumberInstance;
 
@@ -25,8 +26,7 @@ final readonly class ValidateSmsPumpingRisk implements ValidationChecksContract
      */
     public function __invoke(): bool
     {
-        /** @var int $maxAllowedSmsPumpingRiskScore */
-        $maxAllowedSmsPumpingRiskScore = config('twillio-sms.phone_number_lookup.sms_pumping_risk.max_allowed_sms_pumping_risk_score');
+        $maxAllowedSmsPumpingRiskScore = Config::integer('twillio-sms.phone_number_lookup.sms_pumping_risk.max_allowed_sms_pumping_risk_score');
 
         /** @var array $smsPumpingRisk */
         $smsPumpingRisk = $this->phoneNumberLookUp->smsPumpingRisk;

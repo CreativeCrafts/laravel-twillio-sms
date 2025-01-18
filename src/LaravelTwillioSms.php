@@ -6,6 +6,7 @@ namespace CreativeCrafts\LaravelTwillioSms;
 
 use CreativeCrafts\LaravelTwillioSms\Contracts\LaravelTwillioSmsContract;
 use CreativeCrafts\LaravelTwillioSms\Services\ValidationChecks;
+use Illuminate\Support\Facades\Config;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client;
@@ -35,12 +36,10 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
     {
         $this->client = $this->setClient();
 
-        /** @var string $defaultFrom */
-        $defaultFrom = config('twillio-sms.sms_from');
+        $defaultFrom = Config::string('twillio-sms.sms_from');
         $this->from = $defaultFrom;
 
-        /** @var array $validationChecks */
-        $validationChecks = config('twillio-sms.phone_number_lookup.fields');
+        $validationChecks = Config::array('twillio-sms.phone_number_lookup.fields');
         $this->validationChecks = $validationChecks;
     }
 
@@ -118,12 +117,11 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
     public function send(): bool
     {
         try {
-            // $this->validatePhoneNumber();
-            $this->client->messages->create($this->getPhoneNumber(), [
-                'from' => $this->getSentFrom(),
-                'body' => $this->getMessage(),
-                'RiskCheck' => 'disable'
-            ]);
+            $this->validatePhoneNumber();
+            $this->client->messages->create(
+                $this->getPhoneNumber(),
+                $this->smsData()
+            );
 
             return true;
         } catch (ConfigurationException $e) {
@@ -142,16 +140,14 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
         // @pest-mutate-ignore
         trigger_error('The sendSms is deprecated and will be removed in version 2.0. Use send instead.', E_USER_DEPRECATED);
 
-        /** @var string $account_sid */
-        $account_sid = config('twillio-sms.account_sid');
+        $account_sid = Config::string('twillio-sms.account_sid');
 
-        /** @var string $auth_token */
-        $auth_token = config('twillio-sms.auth_token');
+        $auth_token = Config::string('twillio-sms.auth_token');
 
         $client = new Client($account_sid, $auth_token);
 
         $client->messages->create($number, [
-            'from' => config('twillio-sms.sms_from'),
+            'from' => Config::string('twillio-sms.sms_from'),
             'body' => $message,
         ]);
 
@@ -174,6 +170,31 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
     }
 
     /**
+     * Prepares the SMS data array for sending a message.
+     *
+     * This method constructs an array containing the necessary data for sending an SMS,
+     * including the sender's number, message body, and risk check settings.
+     *
+     * @return array An associative array containing the SMS data:
+     *               - 'from': The sender's phone number (string)
+     *               - 'body': The content of the SMS message (string)
+     *               - 'RiskCheck': (Optional) Set to 'disable' if risk check is disabled (string)
+     */
+    protected function smsData(): array
+    {
+        $data = [
+            'from' => $this->getSentFrom(),
+            'body' => $this->getMessage(),
+        ];
+        $riskCheck = Config::boolean('twillio-sms.risk_check', true);
+
+        if (! $riskCheck) {
+            $data['RiskCheck'] = 'disable';
+        }
+        return $data;
+    }
+
+    /**
      * Initializes and returns a Twilio Client instance.
      *
      * This method retrieves the Twilio account SID and auth token from the application's configuration.
@@ -185,10 +206,8 @@ class LaravelTwillioSms implements LaravelTwillioSmsContract
      */
     protected function setClient(): Client
     {
-        /** @var string $account_sid */
-        $account_sid = config('twillio-sms.account_sid');
-        /** @var string $auth_token */
-        $auth_token = config('twillio-sms.auth_token');
+        $account_sid = Config::string('twillio-sms.account_sid');
+        $auth_token = Config::string('twillio-sms.auth_token');
 
         return new Client($account_sid, $auth_token);
     }

@@ -82,3 +82,16 @@ All notable changes to `laravel-twillio-sms` will be documented in this file.
 ## 1.2.0 - 2025-01-17
 
 - Temporary fix for Twilio SMS pumping risk issue
+
+## 1.3.0 - 2025-02-18
+
+feat(sms): enhance SMS risk check configuration and validation
+
+- Add configurable risk check feature through TWILIO_RISK_CHECK env variable
+- Improve SMS data handling with new smsData method
+- Replace config() calls with typed Config::string/array/boolean
+- Add tests for risk check configuration scenarios
+- Fix type handling for configuration values
+
+This change allows more flexible control over Twilio's risk check
+feature while improving type safety and testing coverage

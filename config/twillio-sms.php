@@ -27,4 +27,5 @@ return [
             'max_allowed_sms_pumping_risk_score' => 59,
         ],
     ],
+    'risk_check' => env('TWILIO_RISK_CHECK', true),
 ];

@@ -64,7 +64,7 @@ test('it throws an exception for invalid configuration', function () {
         ->shouldReceive('setClient')
         ->andThrow(ConfigurationException::class);
     $this->sms->__construct();
-})->throws(TypeError::class, 'Cannot assign null to property CreativeCrafts\LaravelTwillioSms\LaravelTwillioSms::$from of type string');
+})->throws(InvalidArgumentException::class, 'Configuration value for key [twillio-sms.sms_from] must be a string, NULL given.');
 
 test('it throws an exception for invalid phone number', function () {
     $this->sms->setPhoneNumber('invalid-number');
@@ -253,4 +253,43 @@ it('throws an exception if Twilio fails', function () {
     })->sendSms($number, $message);
 
     expect($handler)->toThrow(TwilioException::class);
+});
+
+it('returns SMS data without RiskCheck when risk_check is enabled', function () {
+    setDefaultConfig();
+
+    $sms = new LaravelTwillioSms();
+    $sms->setFrom('+1234567890')
+        ->setMessage('Hello World');
+
+    $reflection = new ReflectionClass($sms);
+    $method = $reflection->getMethod('smsData');
+    $method->setAccessible(true);
+
+    $data = $method->invoke($sms);
+
+    expect($data)->toBe([
+        'from' => '+1234567890',
+        'body' => 'Hello World',
+    ]);
+});
+
+it('returns SMS data with RiskCheck when risk_check is disabled', function () {
+    setDefaultConfig(riskCheck: false);
+
+    $sms = new LaravelTwillioSms();
+    $sms->setFrom('+1234567890')
+        ->setMessage('Hello World');
+
+    $reflection = new ReflectionClass($sms);
+    $method = $reflection->getMethod('smsData');
+    $method->setAccessible(true);
+
+    $data = $method->invoke($sms);
+
+    expect($data)->toBe([
+        'from' => '+1234567890',
+        'body' => 'Hello World',
+        'RiskCheck' => 'disable',
+    ]);
 });
