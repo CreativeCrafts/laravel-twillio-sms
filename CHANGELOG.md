@@ -95,3 +95,7 @@ feat(sms): enhance SMS risk check configuration and validation
 
 This change allows more flexible control over Twilio's risk check
 feature while improving type safety and testing coverage
+
+## 1.3.1 - 2025-03-03
+
+- Add support for Laravel 12
